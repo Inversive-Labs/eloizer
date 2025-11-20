@@ -233,8 +233,9 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 
 ## Support
 
-- X [ Twitter ](https://x.com/Seecoalba)
-- Email: git.seco@protonmail.com
+- X [ Twitter ](https://x.com/inversive_xyz)
+- Email: contact@inversive.xyz
+- Website: [Inversive.xyz](https://inversive.xyz/)
 
 ## License
 
