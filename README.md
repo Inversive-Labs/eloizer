@@ -218,15 +218,6 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 4. Register the rule in the parent module
 5. Add tests and documentation
 
-### Development Setup
-
-```bash
-git clone https://github.com/your-org/rust-solana-analyzer.git
-cd rust-solana-analyzer
-cargo build
-cargo test
-```
-
 ## Documentation
 
 - [CLI Documentation](CLI.md) - Complete command-line interface guide

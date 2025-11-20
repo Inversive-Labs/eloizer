@@ -7,7 +7,7 @@ mod commands;
 #[derive(Parser)]
 #[command(
     name = "eloizer",
-    author = "secoalba <git.seco@protonmail.com>",
+    author = "inversive <contact@inversive.xyz>",
     version,
     about = "ELOIZER - Static Analyzer for Solana Smart Contracts",
     long_about = "A powerful static analysis tool for detecting security vulnerabilities and code quality issues in Solana/Anchor smart contracts written in Rust."
