@@ -1,9 +1,9 @@
-# Solana Analyzer
+# Eloizer
 
 A powerful static analysis tool for Solana smart contracts written in Rust. Detect vulnerabilities, security issues, and code quality problems in your Solana/Anchor projects.
 
 <div align="center" style="margin: 2rem 0;">
-  <img src="./image/slides/solana_static_banner.jpeg" alt="Console Output Example" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+  <img src="./image/slides/eloizer.jpg" alt="Console Output Example" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
   <p style="margin-top: 1rem;">
     <a href="https://app.pitch.com/app/presentation/2683d6d1-a55f-4ade-8832-65c4eeb056d6/1f7fee25-021c-49d7-bc80-9b998da9a178/5281f95b-9671-4430-8745-eecebf8f9d6e" 
        target="_blank" rel="noopener noreferrer"
@@ -15,17 +15,76 @@ A powerful static analysis tool for Solana smart contracts written in Rust. Dete
 
 ## Installation
 
-### From Source
+### CLI Tool (Recommended)
+
+Install the command-line interface tool globally:
+
+```bash
+git clone https://github.com/your-org/rust-solana-analyzer.git
+cd rust-solana-analyzer
+cargo install --path cli
+```
+
+Verify installation:
+```bash
+eloizer --version
+```
+
+### From Source (Library)
+
+Build the library from source:
+
 ```bash
 git clone https://github.com/your-org/rust-solana-analyzer.git
 cd rust-solana-analyzer
 cargo build --release
 ```
 
+## CLI Usage
 
-## Quick Start
+<div align="center">
+  <img height="auto" width="auto" alt="CLI Demo" src="./image/video/eloizer_gif.gif">
+</div>
 
-### Basic Usage
+### Basic Analysis
+
+```bash
+# Analyze a Solana project
+eloizer analyze --path test-securty-solana/programs/test-securty-solana/src
+
+# Generate a report
+eloizer analyze --path src/ --output security-report.md
+
+# List available detection rules
+eloizer list-rules
+
+# Get information about a specific rule
+eloizer rule-info pda-sharing-cwe-345
+```
+
+### Advanced Options
+
+```bash
+# Ignore low severity findings
+eloizer analyze --path src/ --ignore low,informational
+
+# Ignore specific rules
+eloizer analyze --path src/ --ignore-rules unsafe-code
+
+# Generate AST files
+eloizer analyze --path src/ --ast
+
+# Verbose output
+eloizer analyze --path src/ --verbose
+```
+
+For complete CLI documentation, see [CLI.md](CLI.md).
+
+
+
+## Quick Start (Library)
+
+### Basic Usage (without CLI)
 ```bash
 # Analyze a Solana project with debug logging
 RUST_LOG=debug cargo run -- --path test-securty-solana/programs/test-securty-solana/src --analyze --output report.md
@@ -63,17 +122,29 @@ Environment Variables:
 
 ```
 rust-solana-analyzer/
-├── src/
-│   ├── main.rs ................................. CLI
-│   ├── ast/ .................................... Modular AST Parser
+├── cli/ ........................................ Command-line interface
+│   ├── src/
+│   │   ├── main.rs ............................. CLI entry point
+│   │   └── commands/ ........................... CLI commands
+│   │       ├── analyze.rs ...................... Analysis command
+│   │       ├── list_rules.rs ................... List rules command
+│   │       ├── rule_info.rs .................... Rule info command
+│   │       ├── init.rs ......................... Init config command
+│   │       └── config.rs ....................... Config command
+│   ├── Cargo.toml .............................. CLI dependencies
+│   └── README.md ............................... CLI documentation
+├── src/ ........................................ Core library
+│   ├── lib.rs .................................. Library entry point
+│   ├── ast/ .................................... AST Parser
 │   │   ├── mod.rs
-│   │   └── parser.rs
+│   │   ├── parser.rs
+│   │   └── json.rs
 │   └── analyzer/
 │       ├── mod.rs .............................. Core types (Finding, Severity)
 │       ├── engine.rs ........................... Rule Engine
-│       ├── span_utils.rs ....................... Precise location system
-│       ├── report.rs ........................... Markdown report generator
-│       ├── dsl/ ................................ Expressive DSL
+│       ├── span_utils.rs ....................... Location system
+│       ├── reporting.rs ........................ Report generator
+│       ├── dsl/ ................................ DSL for rules
 │       │   ├── mod.rs
 │       │   ├── query.rs ........................ Generic helpers
 │       │   └── builders.rs ..................... RuleBuilder fluent API
@@ -93,8 +164,9 @@ rust-solana-analyzer/
 │           └── low/ ............................ LOW severity
 │               ├── anchor_instructions/
 │               └── missing_error_handling/
-├── Cargo.toml .................................. Complete dependencies
-├── DSL_DOCUMENTATION.md ........................ Updated documentation
+├── Cargo.toml .................................. Library dependencies
+├── CLI.md ...................................... CLI documentation
+├── DSL_DOCUMENTATION.md ........................ DSL documentation
 └── ARCHITECTURE.md ............................. Technical architecture
 ```
 
@@ -157,8 +229,9 @@ cargo test
 
 ## Documentation
 
-- [Architecture Overview](ARCHITECTURE.md)
-- [DSL Documentation](DSL_DOCUMENTATION.md)
+- [CLI Documentation](CLI.md) - Complete command-line interface guide
+- [Architecture Overview](ARCHITECTURE.md) - Technical architecture details
+- [DSL Documentation](DSL_DOCUMENTATION.md) - Rule development guide
 
 <div align="center">
   <a href="https://drive.google.com/file/d/1sdrAYy67HIUFWMWg5-p-kKmIPPxDpeZ4/view?usp=sharing" target="_blank" rel="noopener noreferrer">

@@ -1,0 +1,35 @@
+[package]
+name = "eloizer"
+version = "0.1.0"
+edition = "2021"
+description = "ELOIZER - Static Analyzer for Solana Smart Contracts"
+authors = ["secoalba <git.seco@protonmail.com>"]
+license = "AGPL-3.0-only"
+
+[[bin]]
+name = "eloizer"
+path = "src/main.rs"
+
+[dependencies]
+# Core analyzer library
+rust-solana-analyzer = { path = ".." }
+
+# CLI framework
+clap = { version = "4.5", features = ["derive", "cargo"] }
+anyhow = "1.0"
+
+# Logging
+env_logger = "0.11"
+log = "0.4"
+
+# Terminal UI
+colored = "2.1"
+indicatif = "0.17"
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+toml = "0.8"
+
+# File system
+walkdir = "2.3"

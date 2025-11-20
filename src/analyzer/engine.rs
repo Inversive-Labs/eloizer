@@ -162,6 +162,11 @@ impl RuleEngine {
         self.rules.len()
     }
 
+    /// Returns a reference to all loaded rules
+    pub fn get_rules(&self) -> &[Arc<dyn Rule>] {
+        &self.rules
+    }
+
     /// Execute all registered rules on the given AST with source code for precise locations
     pub fn execute_rules(&self, ast: &File, file_path: &str, source_code: &str) -> anyhow::Result<Vec<Finding>> {
         debug!("Executing {} rules on {}", self.rules.len(), file_path);

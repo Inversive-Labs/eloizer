@@ -40,3 +40,8 @@ walkdir = "2.3"
 # Additional dependencies for AST processing
 quote = "1.0"
 proc-macro2 = { version = "1.0", features = ["span-locations"] }
+
+# Library configuration
+[lib]
+name = "rust_solana_analyzer"
+path = "src/lib.rs"

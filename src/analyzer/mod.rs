@@ -10,6 +10,7 @@ use anyhow::Context;
 use log::{debug, info, warn};
 use std::collections::HashMap;
 use std::path::Path;
+use std::sync::Arc;
 use syn::File;
 
 /// Severity level of a vulnerability
@@ -126,9 +127,16 @@ pub struct Analyzer {
 impl Analyzer {
     /// Creates a new analyzer with default options
     pub fn new() -> Self {
+        let mut rule_engine = create_rule_engine();
+        
+        // Load built-in rules
+        if let Err(e) = rule_engine.load_builtin_rules() {
+            warn!("Failed to load built-in rules: {e}");
+        }
+        
         Self {
             options: AnalysisOptions::default(),
-            rule_engine: create_rule_engine(),
+            rule_engine,
         }
     }
 
@@ -168,6 +176,11 @@ impl Analyzer {
             options,
             rule_engine,
         }
+    }
+
+    /// Returns a reference to all loaded rules
+    pub fn rules(&self) -> &[Arc<dyn Rule>] {
+        self.rule_engine.get_rules()
     }
 
     /// Analyzes a single file
